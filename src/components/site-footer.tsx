@@ -1,10 +1,14 @@
 import { ArrowUpRight, BookOpenCheck, Mail, MapPin } from "lucide-react";
 import Link from "next/link";
+import { contactInfo, getEmailUrl } from "@/lib/contact-info";
+
+const contactEmailUrl = getEmailUrl(contactInfo.email);
 
 const footerLinks = [
   { label: "Program bimbel", href: "/program" },
   { label: "Jadwal belajar", href: "/jadwal" },
   { label: "Tentang kami", href: "/tentang-kami" },
+  { label: "Kontak", href: "/kontak" },
   { label: "Cara kerja", href: "/#cara-kerja" },
   { label: "Tutor", href: "/#tutor" },
   { label: "Pertanyaan umum", href: "/#faq" },
@@ -52,17 +56,22 @@ export function SiteFooter() {
               Ingin bertanya tentang program? Hubungi kami untuk informasi
               lebih lanjut.
             </p>
-            <a
-              className="site-footer__contact-link"
-              href="mailto:halo@modernbrilliant.example"
-            >
-              <Mail size={17} aria-hidden="true" />
-              halo@modernbrilliant.example
-              <ArrowUpRight size={15} aria-hidden="true" />
-            </a>
+            {contactEmailUrl ? (
+              <a className="site-footer__contact-link" href={contactEmailUrl}>
+                <Mail size={17} aria-hidden="true" />
+                {contactInfo.email}
+                <ArrowUpRight size={15} aria-hidden="true" />
+              </a>
+            ) : (
+              <Link className="site-footer__contact-link" href="/kontak">
+                <Mail size={17} aria-hidden="true" />
+                Informasi kontak
+                <ArrowUpRight size={15} aria-hidden="true" />
+              </Link>
+            )}
             <p className="site-footer__placeholder">
               <MapPin size={16} aria-hidden="true" />
-              Informasi lokasi akan segera tersedia
+              {contactInfo.address ?? "Informasi lokasi belum dikonfigurasi"}
             </p>
           </div>
         </div>

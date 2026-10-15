@@ -100,7 +100,7 @@ export default function ProgramPage() {
                   <Button href="#katalog" icon>
                     Lihat Semua Program
                   </Button>
-                  <Button href="/#kontak" variant="secondary">
+                  <Button href="/kontak" variant="secondary">
                     Konsultasi Program
                     <ArrowRight size={17} aria-hidden="true" />
                   </Button>
@@ -206,7 +206,7 @@ export default function ProgramPage() {
                 Informasi program dapat berubah. Hubungi tim untuk memastikan
                 ketersediaan dan detail terkini.
               </p>
-              <Link className="program-text-link" href="/#kontak">
+              <Link className="program-text-link" href="/kontak">
                 Tanyakan kepada tim kami
                 <ArrowRight size={17} aria-hidden="true" />
               </Link>
@@ -242,7 +242,7 @@ export default function ProgramPage() {
                   Lihat Program
                   <ArrowRight size={17} aria-hidden="true" />
                 </Button>
-                <Link className="program-final-cta__contact" href="/#kontak">
+                <Link className="program-final-cta__contact" href="/kontak">
                   Hubungi Kami
                   <ArrowRight size={16} aria-hidden="true" />
                 </Link>

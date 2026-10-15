@@ -358,7 +358,7 @@ export default function AboutPage() {
               <Button href="/program" icon>
                 Lihat Program Bimbel
               </Button>
-              <Button href="/#kontak" variant="secondary">
+              <Button href="/kontak" variant="secondary">
                 Hubungi Kami
                 <ArrowRight size={17} aria-hidden="true" />
               </Button>

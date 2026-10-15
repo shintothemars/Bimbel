@@ -11,7 +11,37 @@ import {
   type ContactFormValues,
 } from "@/lib/contact-form";
 
-type SubmissionState = "idle" | "sending" | "pending" | "error";
+type SubmissionState = "idle" | "sending" | "pending" | "error" | "success";
+
+const errorKeys = [
+  "name",
+  "email",
+  "whatsapp",
+  "topic",
+  "program",
+  "message",
+  "consent",
+] as const;
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null;
+}
+
+function readFieldErrors(value: unknown): ContactFormErrors {
+  if (!isRecord(value)) {
+    return {};
+  }
+
+  const fieldErrors: ContactFormErrors = {};
+
+  for (const key of errorKeys) {
+    if (typeof value[key] === "string") {
+      fieldErrors[key] = value[key];
+    }
+  }
+
+  return fieldErrors;
+}
 
 export function ContactForm() {
   const [values, setValues] = useState<ContactFormValues>(emptyContactForm);
@@ -53,10 +83,7 @@ export function ContactForm() {
         body: JSON.stringify(result.values),
       });
       const payload: unknown = await response.json();
-      const responseBody =
-        typeof payload === "object" && payload !== null
-          ? (payload as Record<string, unknown>)
-          : {};
+      const responseBody = isRecord(payload) ? payload : {};
 
       if (
         response.status === 503 &&
@@ -69,22 +96,21 @@ export function ContactForm() {
       if (
         response.status === 400 &&
         responseBody.code === "validation_failed" &&
-        typeof responseBody.errors === "object" &&
-        responseBody.errors !== null
+        isRecord(responseBody.errors)
       ) {
-        setErrors(responseBody.errors as ContactFormErrors);
+        setErrors(readFieldErrors(responseBody.errors));
         setSubmissionState("idle");
         return;
       }
 
-      if (!response.ok) {
+      if (!response.ok || responseBody.code !== "accepted") {
         setSubmissionState("error");
         return;
       }
 
       setValues(emptyContactForm);
       setErrors({});
-      setSubmissionState("idle");
+      setSubmissionState("success");
     } catch {
       setSubmissionState("error");
     }
@@ -100,6 +126,11 @@ export function ContactForm() {
             Formulir sudah divalidasi, tetapi pesan belum dikirim. Tim belum
             mengaktifkan layanan penerimaan pesan. Silakan hubungi kami setelah
             kanal kontak dikonfigurasi.
+          </p>
+        )}
+        {submissionState === "success" && (
+          <p className="contact-form__success" role="status">
+            Pesan berhasil diterima oleh layanan kontak.
           </p>
         )}
         {submissionState === "error" && (

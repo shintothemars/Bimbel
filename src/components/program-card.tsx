@@ -61,7 +61,7 @@ export function ProgramCard({ program }: ProgramCardProps) {
         <Link className="catalog-card__detail-link" href={`/program/${program.slug}`}>
           Lihat Detail
         </Link>
-        <Link className="catalog-card__register-link" href="/#kontak">
+        <Link className="catalog-card__register-link" href="/kontak">
           Daftar Program
         </Link>
       </div>

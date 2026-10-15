@@ -67,7 +67,7 @@ function ScheduleDetailsDialog({
   const dialogRef = useRef<HTMLDialogElement>(null);
   const isFull = schedule.status === "full";
   const duration = formatDuration(getDurationMinutes(schedule));
-  const contactHref = `/?jadwal=${encodeURIComponent(schedule.id)}#kontak`;
+  const contactHref = `/kontak?jadwal=${encodeURIComponent(schedule.id)}`;
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -341,7 +341,7 @@ export function ScheduleExplorer({
           <CalendarDays size={24} aria-hidden="true" />
           <h2>Jadwal belum tersedia</h2>
           <p>Belum ada jadwal untuk ditampilkan. Silakan hubungi tim kami.</p>
-          <Link href="/#kontak">Hubungi kami</Link>
+          <Link href="/kontak">Hubungi kami</Link>
         </div>
       ) : (
         <>

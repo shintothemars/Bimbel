@@ -75,10 +75,10 @@ export default async function ProgramDetailPage({
                 {program.description}
               </p>
               <div className="program-detail-hero__actions">
-                <Button href="/#kontak" icon>
+                <Button href="/kontak" icon>
                   Tanyakan Program Ini
                 </Button>
-                <Link className="program-detail-contact-link" href="/#kontak">
+                <Link className="program-detail-contact-link" href="/kontak">
                   <MessageCircle size={17} aria-hidden="true" />
                   Hubungi kami
                 </Link>
@@ -156,7 +156,7 @@ export default async function ProgramDetailPage({
                   <dd>Diskusikan jadwal dan ketersediaan bersama tim kami.</dd>
                 </div>
               </dl>
-              <Button className="program-detail-aside__button" href="/#kontak">
+              <Button className="program-detail-aside__button" href="/kontak">
                 Hubungi untuk mendaftar
                 <ArrowRight size={17} aria-hidden="true" />
               </Button>

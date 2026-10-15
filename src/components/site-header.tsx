@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 type SiteHeaderProps = {
-  activePage?: "home" | "program" | "schedule" | "about";
+  activePage?: "home" | "program" | "schedule" | "about" | "contact";
 };
 
 const navItems = [
@@ -11,7 +11,7 @@ const navItems = [
   { label: "Program Bimbel", href: "/program", page: "program" },
   { label: "Jadwal", href: "/jadwal", page: "schedule" },
   { label: "Tentang Kami", href: "/tentang-kami", page: "about" },
-  { label: "Kontak", href: "/#kontak" },
+  { label: "Kontak", href: "/kontak", page: "contact" },
 ];
 
 function NavigationLinks({ activePage }: SiteHeaderProps) {
@@ -34,7 +34,7 @@ function NavigationLinks({ activePage }: SiteHeaderProps) {
 export function SiteHeader({ activePage = "home" }: SiteHeaderProps) {
   return (
     <header
-      className={`site-header${activePage === "program" ? " site-header--program" : ""}${activePage === "schedule" ? " site-header--schedule" : ""}${activePage === "about" ? " site-header--about" : ""}`}
+      className={`site-header${activePage === "program" ? " site-header--program" : ""}${activePage === "schedule" ? " site-header--schedule" : ""}${activePage === "about" ? " site-header--about" : ""}${activePage === "contact" ? " site-header--contact" : ""}`}
     >
       <div className="section-wrap site-header__inner">
         <Link
@@ -56,10 +56,10 @@ export function SiteHeader({ activePage = "home" }: SiteHeaderProps) {
         </nav>
 
         <div className="site-header__actions">
-          <Link className="site-header__login" href="/#kontak">
+          <Link className="site-header__login" href="/kontak">
             Masuk
           </Link>
-          <Button href="/#kontak">
+          <Button href="/kontak">
             Daftar
             <ArrowUpRight size={16} aria-hidden="true" />
           </Button>
@@ -71,10 +71,10 @@ export function SiteHeader({ activePage = "home" }: SiteHeaderProps) {
           </summary>
           <nav aria-label="Navigasi seluler" className="mobile-menu__panel">
             <NavigationLinks activePage={activePage} />
-            <Link className="mobile-menu__login" href="/#kontak">
+            <Link className="mobile-menu__login" href="/kontak">
               Masuk
             </Link>
-            <Link className="mobile-menu__register" href="/#kontak">
+            <Link className="mobile-menu__register" href="/kontak">
               Daftar sekarang
               <ArrowUpRight size={16} aria-hidden="true" />
             </Link>

@@ -1,7 +1,46 @@
 import { NextResponse } from "next/server";
 import { validateContactForm } from "@/lib/contact-form";
+import { programs } from "@/lib/programs";
 
 const maxRequestBytes = 10_000;
+
+async function readBodyWithinLimit(request: Request): Promise<string | null> {
+  const reader = request.body?.getReader();
+
+  if (!reader) {
+    return "";
+  }
+
+  const chunks: Uint8Array[] = [];
+  let byteLength = 0;
+
+  while (true) {
+    const { done, value } = await reader.read();
+
+    if (done) {
+      break;
+    }
+
+    byteLength += value.byteLength;
+
+    if (byteLength > maxRequestBytes) {
+      await reader.cancel();
+      return null;
+    }
+
+    chunks.push(value);
+  }
+
+  const body = new Uint8Array(byteLength);
+  let offset = 0;
+
+  for (const chunk of chunks) {
+    body.set(chunk, offset);
+    offset += chunk.byteLength;
+  }
+
+  return new TextDecoder().decode(body);
+}
 
 export async function POST(request: Request) {
   const contentType = request.headers.get("content-type") ?? "";
@@ -13,18 +52,19 @@ export async function POST(request: Request) {
     );
   }
 
-  const declaredLength = Number(request.headers.get("content-length") ?? 0);
+  const contentLength = request.headers.get("content-length");
+  const declaredLength = contentLength ? Number(contentLength) : 0;
 
-  if (declaredLength > maxRequestBytes) {
+  if (Number.isFinite(declaredLength) && declaredLength > maxRequestBytes) {
     return NextResponse.json(
       { code: "payload_too_large", message: "Pesan terlalu besar." },
       { status: 413 },
     );
   }
 
-  const body = await request.text();
+  const body = await readBodyWithinLimit(request);
 
-  if (new TextEncoder().encode(body).byteLength > maxRequestBytes) {
+  if (body === null) {
     return NextResponse.json(
       { code: "payload_too_large", message: "Pesan terlalu besar." },
       { status: 413 },
@@ -67,6 +107,19 @@ export async function POST(request: Request) {
   if (values.website !== "") {
     return NextResponse.json(
       { code: "invalid_submission", message: "Permintaan tidak dapat diproses." },
+      { status: 400 },
+    );
+  }
+
+  if (
+    values.program !== "" &&
+    !programs.some((program) => program.slug === values.program)
+  ) {
+    return NextResponse.json(
+      {
+        code: "validation_failed",
+        errors: { program: "Pilihan program tidak valid." },
+      },
       { status: 400 },
     );
   }

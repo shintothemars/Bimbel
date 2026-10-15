@@ -1,15 +1,17 @@
-export const contactInfo = {
-  whatsappPhone: null,
-  email: null,
-  address: null,
-  mapUrl: null,
-  operatingHours: null,
-} satisfies {
+type ContactInfo = {
   whatsappPhone: string | null;
   email: string | null;
   address: string | null;
   mapUrl: string | null;
   operatingHours: string | null;
+};
+
+export const contactInfo: ContactInfo = {
+  whatsappPhone: null,
+  email: null,
+  address: null,
+  mapUrl: null,
+  operatingHours: null,
 };
 
 export function getWhatsAppUrl(phone: string | null) {
@@ -19,7 +21,11 @@ export function getWhatsAppUrl(phone: string | null) {
 
   const normalizedPhone = phone.replace(/\D/g, "");
 
-  if (normalizedPhone.length < 8 || normalizedPhone.length > 15) {
+  if (
+    !/^\+?[\d\s().-]+$/.test(phone) ||
+    normalizedPhone.length < 8 ||
+    normalizedPhone.length > 15
+  ) {
     return null;
   }
 
@@ -27,11 +33,11 @@ export function getWhatsAppUrl(phone: string | null) {
 }
 
 export function getEmailUrl(email: string | null) {
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+  if (!email || !/^[A-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Z0-9-]+(?:\.[A-Z0-9-]+)+$/i.test(email)) {
     return null;
   }
 
-  return `mailto:${email}`;
+  return `mailto:${encodeURIComponent(email)}`;
 }
 
 export function getMapUrl(mapUrl: string | null) {
