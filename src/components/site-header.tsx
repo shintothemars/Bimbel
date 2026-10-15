@@ -56,10 +56,10 @@ export function SiteHeader({ activePage = "home" }: SiteHeaderProps) {
         </nav>
 
         <div className="site-header__actions">
-          <Link className="site-header__login" href="/kontak">
+          <Link className="site-header__login" href="/login">
             Masuk
           </Link>
-          <Button href="/kontak">
+          <Button href="/register">
             Daftar
             <ArrowUpRight size={16} aria-hidden="true" />
           </Button>
@@ -71,10 +71,10 @@ export function SiteHeader({ activePage = "home" }: SiteHeaderProps) {
           </summary>
           <nav aria-label="Navigasi seluler" className="mobile-menu__panel">
             <NavigationLinks activePage={activePage} />
-            <Link className="mobile-menu__login" href="/kontak">
+            <Link className="mobile-menu__login" href="/login">
               Masuk
             </Link>
-            <Link className="mobile-menu__register" href="/kontak">
+            <Link className="mobile-menu__register" href="/register">
               Daftar sekarang
               <ArrowUpRight size={16} aria-hidden="true" />
             </Link>

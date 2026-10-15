@@ -1,0 +1,20 @@
+[
+  {
+    "id": "usr_demo_01",
+    "name": "Budi Pratama",
+    "email": "siswa@modernbrilliant.id",
+    "phone": "081234567890",
+    "passwordHash": "45369d486b751a3cb4987ec198a9e01f:ebab7c861ae33cf741b1e11f8bfa2b3f943b39d1616b61e4836657089beaf70ae5fc98f832b81457b6a8804fb7915ec4513d112567b67e891ddda40b4fb49d7e",
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "updatedAt": "2026-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "usr_25720d328dd787f3",
+    "name": "Siti Rahma",
+    "email": "siti.rahma@example.com",
+    "phone": "081298765432",
+    "passwordHash": "5c299bcdd51d12a891489e3608397141:e0a26bfe276c1a2f8b46d208b89d586aa99c9ae97cd07b973f0658918d600bdea3559f85b3deaf5a95f4c60b36524d83ae35b0549e56daf14dc009d6ce87fe76",
+    "createdAt": "2026-10-15T15:32:03.481Z",
+    "updatedAt": "2026-10-15T15:32:03.482Z"
+  }
+]
